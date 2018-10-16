@@ -18,9 +18,9 @@ public class Principal {
         
         PropietarioDAO propietario = new PropietarioDAO();
         
-        propietario.create(new PropietarioDTO("123456", "omar", "cmacmmac"));
-        propietario.create(new PropietarioDTO("123457", "juan", "1i2390a"));
-        propietario.create(new PropietarioDTO("123458", "alvaro", "cnawdij921"));
+        //propietario.create(new PropietarioDTO("123456", "omar", "cmacmmac"));
+        //propietario.create(new PropietarioDTO("123457", "juan", "1i2390a"));
+        //propietario.create(new PropietarioDTO("123458", "alvaro", "cnawdij921"));
         
         
         
