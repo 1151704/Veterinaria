@@ -5,25 +5,15 @@
  */
 package principal;
 
-import dao.PropietarioDAO;
-import dto.PropietarioDTO;
-
 /**
  *
  * @author OMAR MONTES
  */
 public class Principal {
-    
+
     public static void main(String[] args) {
-        
-        PropietarioDAO propietario = new PropietarioDAO();
-        
-        propietario.create(new PropietarioDTO("123456", "omar", "cmacmmac"));
-        propietario.create(new PropietarioDTO("123457", "juan", "1i2390a"));
-        propietario.create(new PropietarioDTO("123458", "alvaro", "cnawdij921"));
-        
-        
-        
+
+
     }
-    
+
 }

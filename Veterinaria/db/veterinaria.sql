@@ -36,16 +36,16 @@ CREATE TABLE `mascota` (
 --
 -- RELACIONES PARA LA TABLA `mascota`:
 --   `id_propietario`
---       `propietarios` -> `id`
+--       `propietario` -> `id`
 --
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `propietarios`
+-- Estructura de tabla para la tabla `propietario`
 --
 
-CREATE TABLE `propietarios` (
+CREATE TABLE `propietario` (
   `id` int(11) NOT NULL,
   `cedula` varchar(15) NOT NULL,
   `nombre` varchar(30) NOT NULL,
@@ -53,7 +53,7 @@ CREATE TABLE `propietarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- RELACIONES PARA LA TABLA `propietarios`:
+-- RELACIONES PARA LA TABLA `propietario`:
 --
 
 -- --------------------------------------------------------
@@ -104,9 +104,9 @@ ALTER TABLE `mascota`
   ADD KEY `id_propi` (`id_propietario`);
 
 --
--- Indices de la tabla `propietarios`
+-- Indices de la tabla `propietario`
 --
-ALTER TABLE `propietarios`
+ALTER TABLE `propietario`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `cedula` (`cedula`);
 
@@ -134,9 +134,9 @@ ALTER TABLE `tratxmascota`
 ALTER TABLE `mascota`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT de la tabla `propietarios`
+-- AUTO_INCREMENT de la tabla `propietario`
 --
-ALTER TABLE `propietarios`
+ALTER TABLE `propietario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `tratamiento`
@@ -156,7 +156,7 @@ ALTER TABLE `tratxmascota`
 -- Filtros para la tabla `mascota`
 --
 ALTER TABLE `mascota`
-  ADD CONSTRAINT `mascota_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietarios` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `mascota_ibfk_1` FOREIGN KEY (`id_propietario`) REFERENCES `propietario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tratxmascota`

@@ -66,4 +66,9 @@ public class PropietarioDTO {
         this.direccion = direccion;
     }
 
+    @Override
+    public String toString() {
+        return "{" + "id=" + id + ", cedula=" + cedula + ", nombre=" + nombre + ", direccion=" + direccion + '}';
+    }
+
 }

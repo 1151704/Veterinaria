@@ -67,4 +67,9 @@ public class MascotaDTO {
         this.propietario = propietario;
     }
 
+    @Override
+    public String toString() {
+        return "{" + "id=" + id + ", nombre=" + nombre + ", raza=" + raza + ", propietario=" + propietario + '}';
+    }
+
 }
