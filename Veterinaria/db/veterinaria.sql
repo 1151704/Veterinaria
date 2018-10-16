@@ -19,6 +19,9 @@ SET time_zone = "+00:00";
 --
 -- Base de datos: `veterinaria`
 --
+drop database if exists poo2_veterinaria;
+create database poo2_veterinaria;
+use poo2_veterinaria;
 
 -- --------------------------------------------------------
 
