@@ -6,11 +6,12 @@
 package dao;
 
 import conexion.Conexion;
-import dto.PropietarioDTO;
 import dto.TratamientoDTO;
 import interfaces.Crud;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author OMAR MONTES
  */
-public class TratamientoDAO implements Crud<TratamientoDTO>{
+public class TratamientoDAO implements Crud<TratamientoDTO> {
 
     private static final String SQL_TABLE = "tratamiento",
             SQL_INSERT = "INSERT INTO " + SQL_TABLE + " (descripcion) VALUES (?)",
@@ -31,7 +32,6 @@ public class TratamientoDAO implements Crud<TratamientoDTO>{
 
     private static final Conexion CON = Conexion.getInstance();
 
-    
     @Override
     public boolean create(TratamientoDTO o) {
         PreparedStatement ps;
@@ -52,27 +52,118 @@ public class TratamientoDAO implements Crud<TratamientoDTO>{
 
     @Override
     public TratamientoDTO read(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps;
+        ResultSet rs;
+
+        TratamientoDTO item = null;
+
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_SELECT);
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+
+                item = new TratamientoDTO(rs.getInt(1), rs.getString(2));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (item);
     }
 
     @Override
     public List<TratamientoDTO> readAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<TratamientoDTO> listado = new ArrayList();
+
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_SELECT_ALL);
+
+            rs = ps.executeQuery();
+
+            TratamientoDTO item;
+
+            while (rs.next()) {
+
+                item = new TratamientoDTO(rs.getInt(1), rs.getString(2));
+
+                listado.add(item);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (listado);
     }
 
     @Override
     public boolean update(TratamientoDTO o) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps;
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_UPDATE);
+
+            ps.setString(1, o.getDescripcion());
+            ps.setInt(2, o.getId());
+
+            if (ps.executeUpdate() > 0) {
+                return (true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TratamientoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (false);
     }
 
     @Override
     public boolean delete(Object key) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps;
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_DELETE);
+
+            ps.setInt(1, (Integer) key);
+
+            if (ps.executeUpdate() > 0) {
+                return (true);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TratamientoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (false);
     }
 
     @Override
     public int auto_increment() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        PreparedStatement ps;
+        ResultSet rs;
+        int id = 0;
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_AUTO_INCREMENT);
+
+            ps.setString(1, Conexion.getDb());
+
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                id = rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TratamientoDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (id);
     }
-    
+
 }
