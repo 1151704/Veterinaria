@@ -19,7 +19,7 @@ public class Conexion {
 
     private static Conexion instance;
     private Connection cnn;
-    private static final String DB = "poo2_veterinaria";
+    private static final String DB = "veterinaria";
     private static final String USER = "root";
     private static final String PASS = "";
 
