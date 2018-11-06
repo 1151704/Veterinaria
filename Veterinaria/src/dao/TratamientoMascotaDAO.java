@@ -5,12 +5,11 @@
  */
 package dao;
 
+import dao.interfaces.Crud;
 import conexion.Conexion;
 import dto.MascotaDTO;
-import dto.PropietarioDTO;
 import dto.TratamientoDTO;
 import dto.TratamientoMascotaDTO;
-import interfaces.Crud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -31,6 +30,7 @@ public class TratamientoMascotaDAO implements Crud<TratamientoMascotaDTO> {
             SQL_DELETE = "DELETE FROM " + SQL_TABLE + " WHERE id = ?",
             SQL_SELECT = "SELECT * FROM " + SQL_TABLE + " tm JOIN mascota m ON m.id = tm.id_mascota JOIN tratamiento t ON t.id = tm.id_tratamiento WHERE tm.id = ?",
             SQL_SELECT_ALL = "SELECT * FROM " + SQL_TABLE + " tm JOIN mascota m ON m.id = tm.id_mascota JOIN tratamiento t ON t.id_tratamiento = tm.id ",
+            SQL_SELECT_ALL_BY_MASCOTA = "SELECT * FROM " + SQL_TABLE + " tm JOIN mascota m ON m.id = tm.id_mascota JOIN tratamiento t ON t.id_tratamiento = tm.id WHERE td.id_mascota = ? ",
             SQL_AUTO_INCREMENT = "SELECT AUTO_INCREMENT FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ? AND TABLE_NAME = '" + SQL_TABLE + "'";
 
     private static final Conexion CON = Conexion.getInstance();
@@ -93,6 +93,40 @@ public class TratamientoMascotaDAO implements Crud<TratamientoMascotaDTO> {
         try {
             ps = CON.getCnn().prepareStatement(SQL_SELECT_ALL);
 
+            rs = ps.executeQuery();
+
+            TratamientoDTO tratamiento;
+            MascotaDTO mascota;
+            TratamientoMascotaDTO item;
+
+            while (rs.next()) {
+
+                tratamiento = new TratamientoDTO(rs.getInt("t.id"), "t.descripcion");
+                mascota = new MascotaDTO(rs.getInt("m.id"), rs.getString("m.nombre"), rs.getString("m.raza"), null);
+
+                item = new TratamientoMascotaDTO(rs.getInt("tm.id"), mascota, tratamiento, rs.getDate("tm.fecha"));
+
+                listado.add(item);
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(MascotaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            CON.close();
+        }
+        return (listado);
+    }
+    
+    public List<TratamientoMascotaDTO> readByMascota(int idMascota) {
+        PreparedStatement ps;
+        ResultSet rs;
+        ArrayList<TratamientoMascotaDTO> listado = new ArrayList();
+
+        try {
+            ps = CON.getCnn().prepareStatement(SQL_SELECT_ALL_BY_MASCOTA);
+
+            ps.setInt(1, idMascota);
+            
             rs = ps.executeQuery();
 
             TratamientoDTO tratamiento;

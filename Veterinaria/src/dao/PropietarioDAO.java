@@ -5,9 +5,9 @@
  */
 package dao;
 
+import dao.interfaces.Crud;
 import conexion.Conexion;
 import dto.PropietarioDTO;
-import interfaces.Crud;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
